@@ -17,8 +17,8 @@ const Title = ({ controls }) => {
       initial="hidden"
       animate={controls}
     >
-      <motion.div>Create a CD with</motion.div>
-      <motion.div>your Music NFTs</motion.div>
+      <motion.div>Manage your </motion.div>
+      <motion.div>Onchain Albums</motion.div>
     </motion.div>
   )
 }

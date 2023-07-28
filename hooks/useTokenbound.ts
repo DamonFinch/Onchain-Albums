@@ -50,6 +50,7 @@ const useTokenbound = () => {
 
     return {
         createAccount,
+        getAccount,
         hasDeployedAccount
     }
 }

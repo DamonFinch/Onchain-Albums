@@ -10,6 +10,7 @@ import Spinner from '@components/Spinner'
 import { motion, AnimatePresence } from 'framer-motion'
 import 'swiper/css/bundle' // import Swiper styles
 import getUniqueSongList from '@lib/getUniqueSongList'
+import useTokenbound from '@hooks/useTokenbound'
 
 const SongList = ({ className }: any) => {
   const { activeChain } = useNetwork()
@@ -17,11 +18,22 @@ const SongList = ({ className }: any) => {
   const [songs, setSongs] = useState([] as any)
   const [open, setOpen] = useState(false)
   const { isMobile } = useIsMobile()
+  const { hasDeployedAccount } = useTokenbound()
+
+  const getExistingAlbums = async (uniqueList) => {
+    uniqueList.map(async (single) => {
+      // const alreadyExists = await hasDeployedAccount(tokenContract, tokenId)
+      const tokenId = single?.tokenId
+      const tokenContract = single?.contract?.address
+      const response = await hasDeployedAccount(tokenContract, tokenId)
+    })
+  }
 
   useEffect(() => {
     const init = async () => {
       const response = await getNfts(activeChain?.id?.toString(), account.address)
       const result = getUniqueSongList(response)
+      const existing = await getExistingAlbums(result)
       setSongs(result)
     }
 
