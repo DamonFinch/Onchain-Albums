@@ -25,7 +25,7 @@ const ConnectWalletPage = () => {
     <div className="bg-[url('/images/landing_background_mobile.png')] md:bg-[url('/images/landing_background.png')] bg-black bg-cover bg-center h-[100vh]">
       <Navbar />
       <div
-        className={`pt-[75px] md:pt-[175px] flex text-white flex-col justify-center items-center gap-4 md:gap-11 md:gap-[50px] `}
+        className={`pt-[75px] md:pt-[175px] flex text-white flex-col justify-center items-center gap-4 md:gap-11 md:gap-[75px] `}
       >
         <Title controls={titleControls} />
         <Description
@@ -33,6 +33,7 @@ const ConnectWalletPage = () => {
           className="order-last md:order-none"
         />
         <CustomConnectButton
+          label="Manage your Albums"
           controls={connectControls}
           className="order-first md:order-last"
         />

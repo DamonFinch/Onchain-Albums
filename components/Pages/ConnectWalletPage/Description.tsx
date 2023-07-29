@@ -13,9 +13,7 @@ const Description = ({ controls, className }) => {
       initial="hidden"
       animate={controls}
     >
-      <motion.div>Turn any piece of music into a CD.</motion.div>
-      <motion.div>CDs can own songs and interact with dApps</motion.div>
-      <motion.div>across the Ethereum ecosystem.</motion.div>
+      <motion.div>Sign in to view your albums.</motion.div>
     </motion.div>
   )
 }
