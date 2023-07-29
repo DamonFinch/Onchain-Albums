@@ -57,15 +57,12 @@ export default function Token() {
   // Fetch nft's TBA
   useEffect(() => {
     const accountLookup = async () => {
-      console.log('SWEETS accountLookup ', contractAddress, Number(tokenId))
-
       const result = await getAccount(contractAddress, Number(tokenId))
-      console.log('SWEETS accountLookup result', result)
       setAccount(result)
     }
     if (!tokenId || !contractAddress || !chainIdNumber) return
     accountLookup()
-  }, [tokenId, contractAddress, chainIdNumber])
+  }, [tokenId, contractAddress, chainIdNumber, getAccount])
 
   // fetch nfts inside TBA
   useEffect(() => {

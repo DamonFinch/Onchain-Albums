@@ -41,12 +41,6 @@ const useTokenbound = (chainIdOverride = "") => {
     }
 
     const getAccount = async (contractAddress, tokenId) => {
-        console.log("SWEETS  useTokenBound contractAddress", contractAddress)
-        console.log("SWEETS  useTokenBound tokenId", tokenId)
-        console.log("SWEETS  useTokenBound chainId", chainId)
-        console.log("SWEETS  useTokenBound chainIdOverride", chainIdOverride)
-        console.log("SWEETS  useTokenBound IMPLEMENTATION_ADDRESS", IMPLEMENTATION_ADDRESS)
-        console.log("SWEETS  useTokenBound salt", salt)
         const account = await contract.account(IMPLEMENTATION_ADDRESS, chainIdOverride || chainId, contractAddress, tokenId, salt)
         return account
     }
