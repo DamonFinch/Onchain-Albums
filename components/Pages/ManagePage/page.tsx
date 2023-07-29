@@ -20,7 +20,7 @@ export default function Token() {
   const [showTokenDetail, setShowTokenDetail] = useState(false)
   const chainIdNumber = parseInt(chainId)
   const [account, setAccount] = useState('')
-  const { getAccount } = useTokenbound()
+  const { getAccount } = useTokenbound(chainId)
 
   const {
     data: nftImages,
@@ -57,7 +57,10 @@ export default function Token() {
   // Fetch nft's TBA
   useEffect(() => {
     const accountLookup = async () => {
+      console.log('SWEETS accountLookup ', contractAddress, Number(tokenId))
+
       const result = await getAccount(contractAddress, Number(tokenId))
+      console.log('SWEETS accountLookup result', result)
       setAccount(result)
     }
     if (!tokenId || !contractAddress || !chainIdNumber) return

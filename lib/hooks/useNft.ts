@@ -4,7 +4,7 @@ import { getAlchemyImageSrc, getNftAsset } from "../utils";
 
 function formatImageReturn(imageData?: string | string[]): string[] {
   if (!imageData) {
-    return ["/no-img.jpg"];
+    return ["/images/no-img.jpg"];
   }
 
   return typeof imageData === "string" ? [imageData] : imageData;

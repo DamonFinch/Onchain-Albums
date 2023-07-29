@@ -1,8 +1,7 @@
-import { alchemyId } from './constants'
-
 const { ethers } = require('ethers')
 
-const getDefaultProvider = (networkName, chainId) => {
+const getDefaultProvider = (chainId) => {
+  const alchemyId = process.env.NEXT_PUBLIC_ALCHEMY_KEY;
   const polygonRpc = alchemyId
     ? `https://polygon-mainnet.g.alchemy.com/v2/${alchemyId}`
     : 'https://polygon-rpc.com'
@@ -13,17 +12,13 @@ const getDefaultProvider = (networkName, chainId) => {
   const chainIdInt = parseInt(chainId?.toString())
 
   if (!chainId) return null
-  if (networkName?.includes('matic')) {
-    if (chainIdInt === 137) {
-      return ethers.getDefaultProvider(polygonRpc)
-    } else {
-      return ethers.getDefaultProvider(mumbaiRpc)
-    }
+
+  if (chainIdInt === 137) {
+    return ethers.getDefaultProvider(polygonRpc)
+  } 
+  if (chainId = 80001) {
+    return ethers.getDefaultProvider(mumbaiRpc)
   }
-  return ethers.getDefaultProvider({
-    chainId: chainIdInt,
-    name: networkName,
-  })
 }
 
 export default getDefaultProvider
