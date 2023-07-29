@@ -7,6 +7,7 @@ import { TbaOwnedNft } from '../../../lib/types'
 import { getAlchemy } from '../../../lib/clients'
 import { ethers } from 'ethers'
 import { useGetTokenBalances } from '../../../lib/hooks'
+import MediaPanelTab from './MediaPanelTab'
 
 export const TABS = {
   COLLECTIBLES: 'Collectibles',
@@ -20,6 +21,7 @@ interface Props {
   tokens: TbaOwnedNft[]
   title: string
   chainId: number
+  refetch: Function
 }
 
 export const Panel = ({
@@ -29,6 +31,7 @@ export const Panel = ({
   tokens,
   title,
   chainId,
+  refetch,
 }: Props) => {
   const [copied, setCopied] = useState(false)
   const [currentTab, setCurrentTab] = useState(TABS.COLLECTIBLES)
@@ -98,21 +101,7 @@ export const Panel = ({
       />
       <TabPanel value={TABS.COLLECTIBLES} currentTab={currentTab}>
         {tokens && tokens.length ? (
-          <ul className="custom-scroll grid grid-cols-3 gap-2 overflow-y-auto">
-            {tokens.map((t, i) => {
-              let media = t?.media[0]?.gateway || t?.media[0]?.raw
-              const isVideo = t?.media[0]?.format === 'mp4'
-              if (isVideo) {
-                media = t?.media[0]?.raw
-              }
-
-              return (
-                <li key={`${t.contract.address}-${t.tokenId}-${i}`} className="list-none">
-                  <MediaViewer url={media} isVideo={isVideo} />
-                </li>
-              )
-            })}
-          </ul>
+          <MediaPanelTab tokens={tokens} smartWalletAddress={account} isSmartWallet />
         ) : (
           <div className={'h-full'}>
             <p className="text-center text-sm text-gray-500">No collectables found</p>

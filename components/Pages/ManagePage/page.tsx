@@ -9,6 +9,8 @@ import { getAddress } from 'viem'
 import { TokenDetail } from './TokenDetail'
 import { useRouter } from 'next/router'
 import useTokenbound from '@hooks/useTokenbound'
+import MediaPanelTab from './MediaPanelTab'
+import useWalletNfts from '@hooks/useWalletNfts'
 
 export default function Token() {
   const [imagesLoaded, setImagesLoaded] = useState(false)
@@ -20,6 +22,7 @@ export default function Token() {
   const chainIdNumber = parseInt(chainId)
   const [account, setAccount] = useState('')
   const { getAccount } = useTokenbound(chainId)
+  const { walletNfts } = useWalletNfts()
 
   const {
     data: nftImages,
@@ -63,21 +66,21 @@ export default function Token() {
     accountLookup()
   }, [tokenId, contractAddress, chainIdNumber, getAccount])
 
+  async function fetchNfts(account: string) {
+    const [data, lensData] = await Promise.all([
+      getNfts(chainId, account),
+      getLensNfts(account),
+    ])
+    if (data) {
+      setNfts(data)
+    }
+    if (lensData) {
+      setLensNfts(lensData)
+    }
+  }
+
   // fetch nfts inside TBA
   useEffect(() => {
-    async function fetchNfts(account: string) {
-      const [data, lensData] = await Promise.all([
-        getNfts(chainId, account),
-        getLensNfts(account),
-      ])
-      if (data) {
-        setNfts(data)
-      }
-      if (lensData) {
-        setLensNfts(lensData)
-      }
-    }
-
     if (account) {
       fetchNfts(account)
     }
@@ -137,6 +140,7 @@ export default function Token() {
               tokens={tokens}
               title={nftMetadata.title}
               chainId={chainIdNumber}
+              refetch={fetchNfts}
             />
           )}
           <div className="max-h-1080[px] relative h-full w-full max-w-[1080px]">
@@ -167,6 +171,7 @@ export default function Token() {
           </div>
         </div>
       </div>
+      <MediaPanelTab tokens={walletNfts} smartWalletAddress={account} />
     </div>
   )
 }

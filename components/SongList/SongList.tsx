@@ -1,7 +1,5 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import Song from '../Song'
-import { getNfts } from '../../lib/getNfts'
-import { useAccount, useNetwork } from 'wagmi'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import { EffectCoverflow, Mousewheel, Pagination } from 'swiper/modules'
 import PendingTxModal from '@components/PendingTxModal'
@@ -9,31 +7,18 @@ import useIsMobile from '@hooks/useIsMobile'
 import Spinner from '@components/Spinner'
 import { motion, AnimatePresence } from 'framer-motion'
 import 'swiper/css/bundle' // import Swiper styles
-import getUniqueSongList from '@lib/getUniqueSongList'
+import useWalletNfts from '@hooks/useWalletNfts'
 
 const SongList = ({ className }: any) => {
-  const { activeChain } = useNetwork()
-  const { data: account } = useAccount()
-  const [songs, setSongs] = useState([] as any)
   const [open, setOpen] = useState(false)
   const { isMobile } = useIsMobile()
-
-  useEffect(() => {
-    const init = async () => {
-      const response = await getNfts(activeChain?.id?.toString(), account.address)
-      const result = getUniqueSongList(response)
-      setSongs(result)
-    }
-
-    if (!activeChain || !account) return
-    init()
-  }, [activeChain, account])
+  const { walletNfts } = useWalletNfts()
 
   return (
     <div className={`w-full flex justify-center ${className}`}>
       {/* @ts-ignore */}
       <AnimatePresence exitBeforeEnter>
-        {songs.length > 0 ? (
+        {walletNfts.length > 0 ? (
           <motion.div
             key="swiper"
             initial={{ opacity: 0, y: -10 }}
@@ -60,7 +45,7 @@ const SongList = ({ className }: any) => {
               pagination={false}
               modules={[Mousewheel, EffectCoverflow, Pagination]}
             >
-              {songs.map((song) => (
+              {walletNfts.map((song) => (
                 <SwiperSlide key={song.title}>
                   <Song
                     song={song}

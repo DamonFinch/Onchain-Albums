@@ -12,6 +12,7 @@ interface Props {
   tokens: TbaOwnedNft[]
   title: string
   chainId: number
+  refetch: Function
 }
 
 const variants = {
@@ -41,6 +42,7 @@ export const TokenDetail = ({
   tokens,
   title,
   chainId,
+  refetch,
 }: Props) => {
   let currentAnimate = isOpen ? 'open' : 'closed'
 
@@ -67,6 +69,7 @@ export const TokenDetail = ({
             tokens={tokens}
             title={title}
             chainId={chainId}
+            refetch={refetch}
           />
         </motion.div>
       )}
