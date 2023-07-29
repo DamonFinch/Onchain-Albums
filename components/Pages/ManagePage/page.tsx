@@ -7,7 +7,6 @@ import { useGetApprovals, useNft } from '../../../lib/hooks'
 import { TbaOwnedNft } from '../../../lib/types'
 import { getAddress } from 'viem'
 import { TokenDetail } from './TokenDetail'
-import { HAS_CUSTOM_IMPLEMENTATION } from '../../../lib/constants'
 import { useRouter } from 'next/router'
 import useTokenbound from '@hooks/useTokenbound'
 
@@ -29,7 +28,7 @@ export default function Token() {
   } = useNft({
     tokenId: parseInt(tokenId as string),
     contractAddress: contractAddress as `0x${string}`,
-    hasCustomImplementation: HAS_CUSTOM_IMPLEMENTATION,
+    hasCustomImplementation: false,
     chainId: chainIdNumber,
   })
 
